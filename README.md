@@ -19,8 +19,21 @@ sudo apt install openjdk-8-jdk
 ```
 
 ## Run Time Tool
-To push files into EVO device, or to run executible on EVO device, `ADB` is required.  It can be downloaded from
+To push files into EVO device, pull files from EVO device, or to run executible on EVO device, `ADB` is required.  It can be downloaded from
 https://developer.android.com/tools/releases/platform-tools.
+
+To ease the execution, we usually
+* Setup samba server on Linux.
+* Map Linux's home as Windows drive (fo example `Z:`).
+
+
+When we test example, we will open a Windows command line and change directory to example's path to execute example specified DOS batch file.
+```sh
+z:
+cd \evo_linux_app_dev\examples\mqtt
+uploadAndRun
+```
+Inside the batch file (for example, `uploadAndRun.bat`), it usually push executible into EVO device, and `ADB shell` to execute commands on EVO device.
 
 ## Pofiling Tools
 Under construction...
