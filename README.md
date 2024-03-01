@@ -4,7 +4,7 @@ This repository is used to pack required
 * BSP/3rd-party shared libraries
 
 to develop a typical CDR (Connected Drive Recorder) application.  And it also include sample codes for
-* gstreamer (check `/examples/gstreamer/*`)
+* gstreamer (check [/examples/gstreamer/*](https://github.com/MiTAC-CDR-App/evo_linux_app_dev/tree/main/examples/gstreamer))
 * mqtt (check [/examples/mqtt](https://github.com/MiTAC-CDR-App/evo_linux_app_dev/tree/main/examples/mqtt))
 
 ## Build Environment
