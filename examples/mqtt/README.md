@@ -16,6 +16,6 @@ To run MqttTest successfully,
 
 If you run `ADB` from MS Windows, please execute
 ```sh
-./uploadAndRun.bat
+pushAndRun.bat
 ```
 under the mqtt example directory.

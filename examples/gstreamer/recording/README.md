@@ -13,9 +13,9 @@ It will generate executable project/GstreamerRecordingTest.
 ## How to excute GstreamerRecordingTest:
 If you run `ADB` from MS Windows, please execute
 ```sh
-uploadAndRun.bat
+pushAndRun.bat
 ```
-under the examples/gstreamer/recording/ directory.  After the recording is successful, test.mp4 will be generated, and then `uploadAndRun.bat` will pull test.mp4 to windows.  You can play test.mp4 directly.
+under the examples/gstreamer/recording/ directory.  After the recording is successful, test.mp4 will be generated, and then `pushAndRun.bat` will pull test.mp4 to windows.  You can play test.mp4 directly.
 
 ## Known issue
 When processing the example, a warning message may be displayed. This warning will be resolved in the future.
