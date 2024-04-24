@@ -21,3 +21,7 @@ New feature
 Bug fix
 * The 'gop' argument of mitacCamConfigSubStream() is not applied
 * When the stream setting parameter 'byUserThread' is true, the user thread cannot be stopped after calling mitacCamStopOperation()
+
+### SDK v1.1.0.3
+Bug fix
+* Fix the black image issue for aiStream
