@@ -20,19 +20,28 @@
 
 #define MITAC_ERR_ILLEGAL_PARAMETERS            -4
 
-#define CAM_ID_FRONT        0
-#define CAM_ID_INCABIN      1
+#define CAM_ID_FRONT             0
+#define CAM_ID_INCABIN           1
+// 1. Represent all 4 TVI cameras, currently, only support main stream.
+// 2. Only support camera resultion 5120 x 720.
+// 3. Main stream resultion: typical 2560 x 1440, or other 16:9 smaller resolution.
+// 4. The TVI source is constantly 30 fps, however, it accepts lower fps.
+#define CAM_ID_TVI               2
 
 // 1920 x 1080.
-#define RESOLUTION_1080P    0
+#define RESOLUTION_1080P         0
 // 1280 x 720.
-#define RESOLUTION_720p     1
+#define RESOLUTION_720P          1
 // 854 x 480.
-#define RESOLUTION_480p     2
+#define RESOLUTION_480P          2
 // 480 x 360.
-#define RESOLUTION_360p     3
+#define RESOLUTION_360P          3
+// 2560 x 1440.
+#define RESOLUTION_1440P         4
 // 640 x 480.
-#define RESOLUTION_VGA     10
+#define RESOLUTION_VGA          10
+// 5120 x 720.
+#define RESOLUTION_TVI_SOURCE   20
 
 #define DATA_TYPE_SPS       0x67
 #define DATA_TYPE_PPS       0x68
@@ -46,14 +55,15 @@ typedef void (*FuncLogCallback)(const char *logStr);
 
 std::string mitacCamGetSdkVer(void);
 
-// 1. Only support RESOLUTION_1080P/RESOLUTION_720p.  If RESOLUTION_720p is used, 1080p cannot be used for main/
-//    sub/AI stream.
+// 1. Only support RESOLUTION_1080P/RESOLUTION_720P for non-TVI cameras, if RESOLUTION_720P is used, 1080p
+//    cannot be used for main/sub/AI stream.  Only support RESOLUTION_TVI_SOURCE for TVI cameras.
 // 2. Typically, only support the following fps (TBD): 15, 15.5, 27.5, 30.  The SDK will choose the closed one.
 //    If 15/15.5 is used, 27.5/30 cannot be used for main/sub/AI stream.
 // 3. This API should be called before any main/sub/AI stream's configuration.
 int mitacCamConfigCamera(int cameraID, int resolution, float fps);
 
-// 1. For main stream, it is used for recording, only support RESOLUTION_1080P/RESOLUTION_720p.
+// 1. For main stream, it is used for recording, only support RESOLUTION_1080P/RESOLUTION_720P for non-TVI
+//    cameras.  For TVI cameras, support RESOLUTION_1440P/RESOLUTION_1080P/RESOLUTION_720P.
 // 2. Typically, only support the following fps (TBD): 15, 15.5, 27.5, 30.  The SDK will choose the closed one.
 // 3. For gop, positive value means the real gop value (after rounded to integer).  If the value is negative,
 //    it means how many seconds to generate 1 I-frame, if the negative value is closed to integer, the SDK will
@@ -73,7 +83,7 @@ int mitacCamConfigMainStream(int cameraID, int resolution, float bitrateInMbps, 
 int mitacCamConfigAiStream(int cameraID, int resolution, int *dataFormat, float fps,
                                      FuncOnNewRawData onNewRawData, void *userData, bool byUserThread = false);
 
-// 1. For sub stream, it is used for live view, only support RESOLUTION_720p and below.
+// 1. For sub stream, it is used for live view, only support RESOLUTION_720P and below.
 // 2. Maximum fps is 15.5.  The SDK will choose the proper one.
 // 3. For gop, only allow positive value,
 // 4. onNewEncodedData is the callback to receive SPS/PPS and encoded samples.
