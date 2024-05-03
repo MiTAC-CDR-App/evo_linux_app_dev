@@ -26,3 +26,7 @@ Bug fix
 ### SDK v1.1.0.3
 Bug fix
 * Fix the black image issue for aiStream
+
+### SDK v1.5.0.1
+New feature
+* Support TVI cameras recording (composed to 1 channel)
