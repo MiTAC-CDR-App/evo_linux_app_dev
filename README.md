@@ -6,6 +6,7 @@ This repository is used to pack required
 to develop a typical CDR (Connected Drive Recorder) application.  And it also include sample codes for
 * gstreamer (check [/examples/gstreamer/*](https://github.com/MiTAC-CDR-App/evo_linux_app_dev/tree/main/examples/gstreamer))
 * mqtt (check [/examples/mqtt](https://github.com/MiTAC-CDR-App/evo_linux_app_dev/tree/main/examples/mqtt))
+* smartCable (check [/examples/smartCable](https://github.com/MiTAC-CDR-App/evo_linux_app_dev/tree/main/examples/smartCable))
 
 ## Build Environment
 Our original development environment is Ubuntu Linux, to prepare required development compilers/tools, please execute
