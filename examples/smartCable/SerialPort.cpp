@@ -48,7 +48,10 @@ SerialPort::~SerialPort()
 {
     delete [] port;
     delete readThread;
-    delete httpsThread;
+    if (httpsThread)
+    {
+        delete httpsThread;
+    }
 }
 
 static speed_t getBaudrate(int baudrate)
@@ -420,17 +423,18 @@ void SerialPort::processCmdPacket(const char *data, int len)
 
     if (httpsThread)
     {
-        if (httpsThread->joinable())
+        if (urlPosting)
         {
             printf("The previous request is still in progress.  This request will be ignored.\n");
             return;
         }
-
+        httpsThread->join();
         delete httpsThread;
     }
 
     strUrl = std::string(data, len);
     httpsThread = new std::thread(&SerialPort::httpsThreadFun, this);
+    urlPosting = true;
 }
 
 void SerialPort::httpsThreadFun()
@@ -486,6 +490,7 @@ void SerialPort::httpsThreadFun()
     curl_global_cleanup();
 
     sendData(txMsg.c_str());
+    urlPosting = false;
 }
 
 void SerialPort::processDataPacket(const char *data, int len)
@@ -539,7 +544,10 @@ bool SerialPort::close()
 {
     stopped = true;
     readThread->join();
-    httpsThread->join();
+    if (urlPosting)
+    {
+        httpsThread->join();
+    }
     if (fd != -1)
     {
         printf("close %s.\n", port);

@@ -53,6 +53,7 @@ class SerialPort
         int end = 0;
         bool stopped = true;
         std::thread *readThread = 0;
+        bool urlPosting = false;
         std::thread *httpsThread = 0;
         std::string strUrl;
 
