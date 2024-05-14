@@ -8,6 +8,7 @@ The SDK is created for supporting the camera functions(to offer H264 encoded fra
 ## Sample codes for using camera SDK
 * camera1.x/examples/SimpleRecorder sample code to generate the mp4 file with the camera SDK
 * camera1.x/examples/RecordingWithCarDetect sample code to record and run AI with the camera SDK
+* camera1.x/examples/streaming/Live555 sample code to offer RTSP streaming service with the camera SDK
 * camera1.x/tests/FpsTest sample code for the fps measurement
 
 ## Release Note
