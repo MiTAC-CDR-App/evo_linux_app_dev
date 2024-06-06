@@ -27,6 +27,10 @@
 // 3. Main stream resultion: typical 2560 x 1440, or other 16:9 smaller resolution.
 // 4. The TVI source is constantly 30 fps, however, it accepts lower fps.
 #define CAM_ID_TVI               2
+#define CAM_ID_TVI_1            11
+#define CAM_ID_TVI_2            12
+#define CAM_ID_TVI_3            13
+#define CAM_ID_TVI_4            14
 
 // 1920 x 1080.
 #define RESOLUTION_1080P         0
@@ -60,6 +64,7 @@ std::string mitacCamGetSdkVer(void);
 // 2. Typically, only support the following fps (TBD): 15, 15.5, 27.5, 30.  The SDK will choose the closed one.
 //    If 15/15.5 is used, 27.5/30 cannot be used for main/sub/AI stream.
 // 3. This API should be called before any main/sub/AI stream's configuration.
+// 4. For TVI cameras, not support to use CAM_ID_TVI_1 - CAM_ID_TVI_4, should use CAM_ID_TVI.
 int mitacCamConfigCamera(int cameraID, int resolution, float fps);
 
 // 1. For main stream, it is used for recording, only support RESOLUTION_1080P/RESOLUTION_720P for non-TVI
@@ -73,6 +78,8 @@ int mitacCamConfigCamera(int cameraID, int resolution, float fps);
 // 4. onNewEncodedData is the callback to receive SPS/PPS and encoded samples.
 // 5. userData will be used when callback onNewEncodedData().
 // 6. If byUserThread = true, onNewEncodedData() will be called inside mitacCamDispatchMainStreamLoop().
+// 7. For TVI cameras, not support to use CAM_ID_TVI_1 - CAM_ID_TVI_4, should use CAM_ID_TVI.
+// 8. Due to current limitation, for TVI cameras, cannot support both main stream and AI streams.
 int mitacCamConfigMainStream(int cameraID, int resolution, float bitrateInMbps, float fps, float gop,
                              FuncOnNewEncodedData onNewEncodedData, void *userData, bool byUserThread = false);
 
@@ -80,6 +87,8 @@ int mitacCamConfigMainStream(int cameraID, int resolution, float bitrateInMbps, 
 // 2. For fps, it is constrained to fps of camera, which is set by mitacCamConfigCamera().
 // 3. userData will be used when callback FuncOnNewRawData().
 // 4. If byUserThread = true, onNewEncodedData() will be called inside mitacCamDispatchAiStreamLoop().
+// 5. For TVI cameras, not support to use CAM_ID_TVI, should use CAM_ID_TVI_1 - CAM_ID_TVI_4.
+// 6. Due to current limitation, for TVI cameras, cannot support both main stream and AI streams.
 int mitacCamConfigAiStream(int cameraID, int resolution, int *dataFormat, float fps,
                                      FuncOnNewRawData onNewRawData, void *userData, bool byUserThread = false);
 
@@ -89,6 +98,7 @@ int mitacCamConfigAiStream(int cameraID, int resolution, int *dataFormat, float 
 // 4. onNewEncodedData is the callback to receive SPS/PPS and encoded samples.
 // 5. userData will be used when callback onNewEncodedData().
 // 6. If byUserThread = true, onNewEncodedData() will be called inside mitacCamDispatchSubStreamLoop().
+// 7. Not yet support TVI cameras.
 int mitacCamConfigSubStream(int cameraID, int resolution, float bitrateInMbps, float fps, int gop,
                             FuncOnNewEncodedData onNewEncodedData, void *userData, bool byUserThread = false);
 
@@ -107,11 +117,13 @@ int mitacCamStopOperation(int cameraID);
 // 2. It should call immediately after successful mitacCamStartOperation().
 // 3. It will return once camera stopped.
 // 4. All main stream's onNewEncodedData() of the specified camera will be callbacked inside.
+// 5. For TVI cameras, not support to use CAM_ID_TVI_1 - CAM_ID_TVI_4, should use CAM_ID_TVI.
 void mitacCamDispatchMainStreamLoop(int cameraID);
 // 1. It is used with mitacCamConfigAiStream() with "byUserThread = true".
 // 2. It should call immediately after successful mitacCamStartOperation().
 // 3. It will return once camera stopped.
 // 4. All AI stream's onNewRawData() of the specified camera will be callbacked inside.
+// 5. For TVI cameras, not support to use CAM_ID_TVI, should use CAM_ID_TVI_1 - CAM_ID_TVI_4.
 void mitacCamDispatchAiStreamLoop(int cameraID);
 // 1. It is used with mitacCamConfigSubStream() with "byUserThread = true".
 // 2. It should call immediately after successful mitacCamStartOperation().
