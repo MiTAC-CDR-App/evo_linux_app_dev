@@ -33,8 +33,10 @@ New feature
 ### SDK v1.5.0.2
 New feature
 * Support TVI AI streams (cannot work with TVI recording)
+
 Bug fix
 * Fix TVI recording mirror issue
+
 Limitation
 * For TVI cameras, cannot support both recording and AI
 
